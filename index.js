@@ -8,7 +8,7 @@ const questions = [
         name: 'text',
         message: 'Enter the text of your logo.(only three letters)',
         validate: (input) => {
-            if (input.length > 3) {
+            if (input.length !== 3) {
                 return 'Text must be three characters long';
             }
             return true;
@@ -18,7 +18,7 @@ const questions = [
         type: 'input',
         name: 'textColor',
         message: 'Enter the text color.(e.g., red, #FF0000)',
-        default: ' #000000'
+        default: '#000000'
     },
     {
         type: 'list',
@@ -34,9 +34,11 @@ const questions = [
     },
 ];
 
-inquirer.createPromptModule(questions).then(answers => {
-    generateLogo(answers);
-});
+function init() {
+    inquirer.prompt(questions).then(answers => {
+        generateLogo(answers);
+    });
+}
 
 function generateLogo({text, textColor, shape, shapeColor}) {
     const width = 300;
@@ -70,3 +72,5 @@ function generateLogo({text, textColor, shape, shapeColor}) {
         console.log('Generated logo.svg');
       });
 };
+
+init()
